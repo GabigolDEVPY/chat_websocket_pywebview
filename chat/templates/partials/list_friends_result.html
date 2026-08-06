@@ -1,0 +1,13 @@
+{% if users %}
+    {% for user in users %}
+        <div class="list-group-item d-flex justify-content-between align-items-center py-2 px-0">
+            <div class="d-flex align-items-center gap-2">
+                <img src="https://via.placeholder.com/36" class="rounded-circle flex-shrink-0" alt="Avatar">
+                <div><strong class="d-block text-dark fs-6">{{ user.username }}</strong><small class="text-muted">@{{user.username}}</small></div>
+            </div>
+            <button type="button" class="btn btn-sm btn-primary rounded-pill px-3">Adicionar</button>
+        </div>
+    {% endfor %}
+{% else %}
+    <div><span>nenhum usuário encontrado</span></div>
+{% endif %}
