@@ -1,7 +1,7 @@
 
 
 let ws = null;
-
+const user = JSON.parse(document.getElementById("current-user").textContent);
 
 
 function OpenSocket (room) {
@@ -16,14 +16,14 @@ function OpenSocket (room) {
     );
 
     ws.onopen = async () => {
-        console.log("tentando limpar")
         document.getElementById("messages").innerHTML = "";
     }
 
 
-
+    
     ws.onmessage = function(e) {
-
+        const messages = document.getElementById("messages");
+        
         const data = JSON.parse(e.data);
         if (data.type === "history") {
                 document.getElementById("messages").innerHTML = "";
@@ -39,18 +39,30 @@ function OpenSocket (room) {
                  for ( const message of data.messages ) {
                    const messageEL = document.createElement("div");
                    messageEL.innerHTML = `
-                   <div class="bg-light rounded p-2 mb-1">${message.user}: ${message.text}</div>`
-                   document.getElementById("messages").appendChild(messageEL);                
-               }
+                        <div class="d-flex mb-3 ${message.user === user ? 'justify-content-end' : ''}">
+                            <div class="${message.user === user ? 'bg-primary text-white' : 'bg-white'} rounded-3 px-3 py-2 shadow-sm" style="max-width: 70%;">
+                                ${message.text}
+                            </div>
+                        </div>
+                   `
+                   document.getElementById("messages").appendChild(messageEL);       
+                }
+                messages.scrollTop = messages.scrollHeight;
             }
         }
         
         else if (data.type === "message") {
             const messageEL = document.createElement("div");
             messageEL.innerHTML = `
-                <div class="bg-light rounded p-2 mb-1">${data.username}: ${data.message}</div>
+                <div class="d-flex mb-3 ${data.username === user ? 'justify-content-end' : ''}">
+                     <div class="${data.username === user ? 'bg-primary text-white' : 'bg-white'} rounded-3 px-3 py-2 shadow-sm" style="max-width: 70%;">
+                        ${data.message}
+                    </div>
+                </div>
             `
-            document.getElementById("messages").appendChild(messageEL);
+            messages.appendChild(messageEL);
+
+            messages.scrollTop = messages.scrollHeight;
         }
 
     }
