@@ -18,4 +18,4 @@ class RequestFriendView(View):
     def post(self, request, id):
         self.id = id
         print(id)
-        
+        return render(request, template_name="partials/request_pending.html")
