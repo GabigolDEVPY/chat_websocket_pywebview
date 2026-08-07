@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+from chat.models import Room
 
 # Create your models here.
 class Friend(models.Model):
@@ -13,4 +15,9 @@ class Friend(models.Model):
                 name="unique_friendship"
             )
         ]
-    
+
+
+class RequestFriend(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="requests")
+    friend = models.ForeignKey(User, on_delete=models.CASCADE)
+    acepted = models.BooleanField(default=False)

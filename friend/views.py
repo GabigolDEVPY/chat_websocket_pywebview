@@ -14,7 +14,8 @@ class SearchFriendView(View):
         return render(request, template_name="partials/list_friends_result.html", context=context)
     
 
-class AddFriendView(View):
-    def post(self, request):
-        self.id = request.POST.get("id")
+class RequestFriendView(View):
+    def post(self, request, id):
+        self.id = id
+        print(id)
         
