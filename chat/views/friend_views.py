@@ -13,3 +13,8 @@ class SearchFriendView(View):
         users = User.objects.filter(username=self.username)
         context = {"users": users}
         return render(request, template_name="partials/list_friends_result.html", context=context)
+    
+
+class AddFriendView(View):
+    def post(self, request):
+        self.id = request.POST.get("id")

@@ -26,8 +26,8 @@
                 </div>
             </div>
             <div class="list-group list-group-flush overflow-auto flex-grow-1">
-                {% for room in rooms %}
-                    <a onclick="OpenSocket('{{ room.name|escapejs }}')" class="list-group-item list-group-item-action py-3 border-0 cursor-pointer">
+                {% for friend in friends %}
+                    <a onclick="OpenSocket('{{ friend.room.name|escapejs }}')" class="list-group-item list-group-item-action py-3 border-0 cursor-pointer">
                         <div class="d-flex align-items-center cursor-pointer">
                             <img src="https://via.placeholder.com/40" class="rounded-circle me-3 flex-shrink-0" alt="Avatar">
                             <div class="text-truncate w-100">
