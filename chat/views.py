@@ -1,8 +1,6 @@
 from django.views.generic import TemplateView, View
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from ..models import Room, Message, Friend
-from django.http import JsonResponse
 from django.contrib.auth import logout
 from django.shortcuts import redirect
 

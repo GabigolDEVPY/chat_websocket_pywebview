@@ -18,3 +18,4 @@ class SearchFriendView(View):
 class AddFriendView(View):
     def post(self, request):
         self.id = request.POST.get("id")
+        

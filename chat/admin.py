@@ -11,6 +11,3 @@ class MessageAdmin(admin.ModelAdmin):
 class MessageAdmin(admin.ModelAdmin):
     list_display = ("id", "name")
     
-@admin.register(Friend)
-class MessageAdmin(admin.ModelAdmin):
-    list_display = ("user", "friend", "room")
