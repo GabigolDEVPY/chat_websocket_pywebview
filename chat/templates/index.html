@@ -86,7 +86,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form hx-get="{% url "chat:search_friend" %}" hx-target="#searchResultsList" hx-trigger="submit" class="mb-3">
+                    <form hx-get="{% url "friend:search_friend" %}" hx-target="#searchResultsList" hx-trigger="submit" class="mb-3">
                         <div class="input-group">
                             <input type="text" name="q" class="form-control" placeholder="Pesquisar usuário..." autocomplete="off" required>
                             <button type="submit" class="btn btn-outline-primary d-flex align-items-center justify-content-center" style="width:45px;">
@@ -100,7 +100,7 @@
                                 <img src="https://via.placeholder.com/36" class="rounded-circle flex-shrink-0" alt="Avatar">
                                 <div><strong class="d-block text-dark fs-6">Maria Silva</strong><small class="text-muted">@maria.silva</small></div>
                             </div>
-                            <button hx-post="{% url 'chat:add_friend' %}" hx-target="this" type="button" class="btn btn-sm btn-primary rounded-pill px-3">Adicionar</button>
+                            <button hx-post="{% url 'friend:add_friend' %}" hx-target="this" type="button" class="btn btn-sm btn-primary rounded-pill px-3">Adicionar</button>
                         </div>
                     </div>
                 </div>

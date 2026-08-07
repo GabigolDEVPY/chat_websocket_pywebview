@@ -5,7 +5,7 @@
                 <img src="https://via.placeholder.com/36" class="rounded-circle flex-shrink-0" alt="Avatar">
                 <div><strong class="d-block text-dark fs-6">{{ user.username }}</strong><small class="text-muted">@{{user.username}}</small></div>
             </div>
-            <button hx-post="{% url 'chat:add_friend' %}" hx-target="this" type="button" class="btn btn-sm btn-primary rounded-pill px-3">Adicionar</button>
+            <button hx-post="{% url 'friend:add_friend' %}" hx-target="this" type="button" class="btn btn-sm btn-primary rounded-pill px-3">Adicionar</button>
         </div>
     {% endfor %}
 {% else %}
