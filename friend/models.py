@@ -20,4 +20,12 @@ class Friend(models.Model):
 class RequestFriend(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="requests")
     friend = models.ForeignKey(User, on_delete=models.CASCADE)
-    acepted = models.BooleanField(default=False)
+    accepted = models.BooleanField(default=False)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "friend"],
+                name="unique_request_friend"
+            )
+        ]
