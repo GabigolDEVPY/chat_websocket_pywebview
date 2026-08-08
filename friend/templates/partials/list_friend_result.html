@@ -6,6 +6,8 @@
         </div>
         {% if request_friend and not request_friend.accepted %}
             <span class="badge bg-warning text-dark small px-3 py-2 rounded-pill opacity-75 pe-none user-select-none">Solicitação enviada</span>
+        {% elif request_friend and request_friend.accepted %}
+            <span class="badge bg-success text-white small px-3 py-2 rounded-pill opacity-75 pe-none user-select-none">Amigos</span>
         {% else %}
             <button hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-post="{% url 'friend:request_friend' user.id %}" hx-target="this" hx-swap="outerHTML" type="button" class="btn btn-sm btn-primary rounded-pill px-3">Adicionar</button>
         {% endif %}

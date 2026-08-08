@@ -5,6 +5,7 @@ from django.http import JsonResponse, response
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from .models import RequestFriend
+from .services.friend_service import FriendService
 
 
 class SearchFriendView(View):
@@ -23,5 +24,15 @@ class RequestFriendView(View):
         user = User.objects.get(id=id)
         print(user.username)
         if user:
-            RequestFriend.objects.create(user=request.user, friend=user)
+            RequestFriend.objects.bulk_create([
+                RequestFriend(user=user, friend=request.user)
+                ])
+            
         return render(request, template_name="partials/request_pending.html")
+
+
+class AcceptedFriendView(View):
+    def post(self, request, id):
+        context = FriendService.accepted_friend(request_id=id, user=request.user)
+        return render(request, template_name="partials/requests_list.html", context=context)
+

@@ -12,6 +12,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["friends"] = self.request.user.friends.all()
+        context["friends_requests"] = self.request.user.sent_requests.filter(accepted=False)
         return context
     
     
@@ -21,7 +22,7 @@ class LoginView(LoginView):
 
 
 class LogoutView(View):
-    def get(self, request):
+    def get(self, request, id):
         logout(request)
         return redirect("chat:login")
     
