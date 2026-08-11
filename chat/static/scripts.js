@@ -2,11 +2,12 @@
 
 let ws = null;
 const user = JSON.parse(document.getElementById("current-user").textContent);
-const friendSelected = null;
+window.friendSelected = null;
 
 
-function OpenSocket (room, friend_username) {
+function OpenSocket (room, friend_username, friend_id) {
     document.getElementById("friend-name-id").textContent = friend_username;
+    window.friendSelected = friend_username;
     if (ws) {
         ws.close()
     }
@@ -22,6 +23,8 @@ function OpenSocket (room, friend_username) {
         document.getElementById("messages").innerHTML = "";
         document.getElementById("footer-message").style.display = "block";
         document.getElementById("friend-name-id").style.display = "block";
+        const status_friend = document.getElementById(`status-${friend_id}`);
+        document.getElementById("status-friend").textContent = status_friend.innerText;
     }
 
 
