@@ -27,3 +27,12 @@ function StatusSocket () {
 document.addEventListener("DOMContentLoaded", () => {
     StatusSocket();
 });
+
+
+function Logout() {
+    if (ws_status) {
+        console.log("saindo")
+        ws_status.close();
+    }
+
+}

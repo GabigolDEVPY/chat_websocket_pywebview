@@ -8,6 +8,7 @@ def remove_user(user_id):
         ONLINE_USERS[user_id] -= 1
         if ONLINE_USERS[user_id] <= 0:
             del ONLINE_USERS[user_id]
+            return True
             
 def is_online(user_id):
     return user_id in ONLINE_USERS

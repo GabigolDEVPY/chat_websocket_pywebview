@@ -22,6 +22,7 @@ class StatusConsumer(AsyncWebsocketConsumer):
         )
         
         await self.accept()
+        
         add_user(self.user.id)
         
         await self.notify_friends(True)
@@ -30,13 +31,14 @@ class StatusConsumer(AsyncWebsocketConsumer):
     
     
     async def disconnect(self, code):
-        remove_user(self.user.id)
-        await self.notify_friends(False)
-        
-        await self.channel_layer.group_discard(
-            self.group_name,
-            self.channel_name
-        )
+        offline = remove_user(self.user.id)
+        if offline:
+            await self.notify_friends(False)
+            
+            await self.channel_layer.group_discard(
+                self.group_name,
+                self.channel_name
+            )
     
     
     
@@ -47,8 +49,6 @@ class StatusConsumer(AsyncWebsocketConsumer):
         return list(
             Friend.objects.filter(user=self.user).values_list("id", flat=True)
         )
-
-
 
 
     async def notify_friends(self, online):
