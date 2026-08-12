@@ -5,9 +5,22 @@ const user = JSON.parse(document.getElementById("current-user").textContent);
 window.friendSelected = null;
 
 
-function OpenSocket (room, friend_username, friend_id) {
-    document.getElementById("friend-name-id").textContent = friend_username;
+function ChangeStatusBar (friend_username, friend_id) {
     window.friendSelected = friend_username;
+    document.getElementById("friend-name-id").classList.remove("d-none");
+    document.getElementById("friend-name-id").classList.add("d-flex");
+
+    document.querySelector("#friend-name-id strong").textContent = friend_username; 
+
+    document.getElementById("messages").innerHTML = "";
+    document.getElementById("footer-message").style.display = "block";
+
+    const status_friend = document.getElementById(`status-${friend_id}`);
+    console.log("restando user", friend_username)
+    document.getElementById("status-friend").textContent = status_friend.innerText;
+}
+
+function OpenSocket (room) {
     if (ws) {
         ws.close()
     }
@@ -18,15 +31,6 @@ function OpenSocket (room, friend_username, friend_id) {
     ws = new WebSocket(
         `${protocol}://${window.location.host}/ws/chat/${room}/`
     );
-
-    ws.onopen = async () => {
-        document.getElementById("messages").innerHTML = "";
-        document.getElementById("footer-message").style.display = "block";
-        document.getElementById("friend-name-id").style.display = "block";
-        const status_friend = document.getElementById(`status-${friend_id}`);
-        document.getElementById("status-friend").textContent = status_friend.innerText;
-    }
-
 
     
     ws.onmessage = function(e) {
@@ -85,3 +89,8 @@ function SendMessage () {
     }))
 }
 
+
+
+function CloseChatMobile() {
+    document.body.classList.remove('chat-active');
+}

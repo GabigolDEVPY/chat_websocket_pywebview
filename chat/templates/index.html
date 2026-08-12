@@ -30,7 +30,7 @@
             </div>
             <div class="list-group list-group-flush overflow-auto flex-grow-1">
                 {% for friend in friends %}
-                    <a onclick="OpenSocket('{{ friend.room.name|escapejs }}', '{{ friend.friend.username|escapejs }}', {{ friend.friend.id|escapejs }})" class="list-group-item list-group-item-action py-3 border-0 cursor-pointer">
+                    <a onclick="OpenSocket('{{ friend.room.name|escapejs }}'); ChangeStatusBar('{{ friend.friend.username|escapejs }}', '{{ friend.friend.id|escapejs }}');" class="list-group-item list-group-item-action py-3 border-0 cursor-pointer">
                         <div class="d-flex align-items-center cursor-pointer">
                             <!-- Ícone de usuário na lista de amigos -->
                             <div class="rounded-circle me-3 flex-shrink-0 bg-secondary-subtle d-flex align-items-center justify-content-center text-secondary" style="width:40px;height:40px;">
@@ -44,8 +44,7 @@
                                     <!-- Lado direito: Horário e Status empilhados -->
                                     <div class="d-flex flex-column align-items-end ms-2" style="min-width: fit-content;">
                                         <small class="text-muted" style="font-size:0.75rem; line-height: 1;">12:30</small>
-                                        <!-- Nova escrita "online" abaixo do horário -->
-                                        <small id="status-{{ friend.id }}" class="text-success" style="font-size:0.80rem; line-height: 1.2; font-weight: 500;">{% if friend.is_online %}online{% else %}offline{% endif %}</small>
+                                        <small id="status-{{ friend.friend.id }}" class="text-success" style="font-size:0.80rem; line-height: 1.2; font-weight: 500;">{% if friend.is_online %}online{% else %}offline{% endif %}</small>
                                     </div>
                                 </div>
                                 <small class="text-muted text-truncate d-block mt-1">Oi, tudo bem?</small>
@@ -71,35 +70,52 @@
                 </a>
             </div>
         </aside>
+
         <!-- ÁREA DO CHAT -->
         <main class="flex-grow-1 d-flex flex-column h-100 position-relative w-100 min-w-0">
-            <header class="p-3 border-bottom bg-white d-flex align-items-center gap-3">
-                <!-- Ícone igual ao da lista de conversas -->
-                <div class="rounded-circle bg-secondary-subtle d-flex align-items-center justify-content-center text-secondary" style="width:40px;height:40px;">
-                    <i class="bi bi-person-fill fs-5"></i>
+            
+            <!-- HEADER CORRIGIDO PARA COMPATIBILIDADE COM O JS ORIGINAL -->
+            <header class="p-3 border-bottom bg-white d-flex align-items-center gap-3" style="min-height: 70px;">
+                <!-- 
+                    Esta é a ÚNICA div com id="friend-name-id".
+                    Seu JS faz: getElementById("friend-name-id").style.display = "block"
+                    Ao virar block, ela mostra o avatar + textos alinhados via flexbox interno.
+                -->
+                <div id="friend-name-id" class="d-none align-items-center gap-3" >
+                    <!-- Avatar -->
+                    <div class="rounded-circle bg-secondary-subtle d-flex align-items-center justify-content-center text-secondary flex-shrink-0" style="width:40px;height:40px;">
+                        <i class="bi bi-person-fill fs-5"></i>
+                    </div>
+                    
+                    <!-- Textos: Nome e Status -->
+                    <div class="d-flex flex-column lh-1 gap-1">
+
+                        <strong class="text-dark">Selecione uma conversa</strong>
+                        <small id="status-friend" class="text-success" style="font-size: 0.8rem;">Status</small>
+                    </div>
                 </div>
-                <!-- <img src="https://via.placeholder.com/40" class="rounded-circle" alt="Contato"> -->
-                
-                <div><strong id="friend-name-id" class="d-block">Teste</strong><small id="status-friend" class="text-success">Status</small></div>
             </header>
+
             <div id="messages" class="flex-grow-1 p-3 overflow-auto bg-white">
                 <div class="text-muted">Nenhuma conversa foi selecionada</div>
             </div>
-            <!-- footer desativado até que uma mensagem seja selecionada -->
-            <footer style="display: none" id="footer-message" class="p-3 border-top bg-white">
+
+            <!-- FOOTER CORRIGIDO (div interna estava aberta) -->
+            <footer id="footer-message" class="p-3 border-top bg-white" style="display: none;">
                 <div class="input-group">
                     <input id="messageInput" type="text" class="form-control rounded-pill border-secondary-subtle" placeholder="Digite uma mensagem..." aria-label="Mensagem">
                     <button class="btn btn-primary rounded-circle ms-2 d-flex align-items-center justify-content-center" onclick="SendMessage()" id="sendButton" style="width:45px;height:45px;" title="Enviar mensagem">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/></svg>
-                </button>
-            </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/></svg>
+                    </button>
+                </div>
             </footer>
         </main>
     </div>
+
     <!-- MODAL ADICIONAR AMIGOS -->
     {% include "modal_friend.html" %}
-<!-- contextos -->
-    {{ request.user.username|json_script:"current-user" }}
 
+    <!-- Contextos -->
+    {{ request.user.username|json_script:"current-user" }}
 </body>
 </html>

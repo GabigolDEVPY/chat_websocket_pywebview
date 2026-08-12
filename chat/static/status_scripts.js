@@ -14,9 +14,13 @@ function StatusSocket () {
         const item = document.querySelector(
             "#status-friend"
         );
+        console.log("está offline")
+        console.log(data.user_username, "está offline")
         if (window.friendSelected === data.user_username) {
-            item.innerHTML = data.online ? "Online" : "Offline"
+            console.log("funcão sendo chamada")
+            item.innerHTML = data.online ? "online" : "offline"
         }
+        document.getElementById(`status-${data.user_id}`).textContent = data.online ? "online" : "offline"
     }
 }
 
