@@ -82,15 +82,21 @@ function OpenSocket (room) {
 
 
 function SendMessage () {
-    const message = document.getElementById("messageInput").value.trim()
+    const message = document.getElementById("messageInput");
     ws.send(JSON.stringify({
-        "message": message,
+        "message": message.value.trim(),
         "type": "receive"
     }))
+    console.log("limpar agora");
+    message.value = "";
+
+}
+
+document.getElementById("messageInput").onkeyup = function(e) {
+    if (e.key === "Enter") {
+        SendMessage();
+    }
 }
 
 
 
-function CloseChatMobile() {
-    document.body.classList.remove('chat-active');
-}
