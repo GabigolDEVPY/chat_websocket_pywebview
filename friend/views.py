@@ -21,9 +21,7 @@ class RequestFriendView(View):
         user = User.objects.get(id=id)
         print(user.username)
         if user:
-            RequestFriend.objects.bulk_create([
-                RequestFriend(user=user, friend=request.user)
-                ])
+            RequestFriend.objects.create(user=user, friend=request.user)
             
         return render(request, template_name="partials/request_pending.html")
 

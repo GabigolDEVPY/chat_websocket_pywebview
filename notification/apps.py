@@ -6,4 +6,5 @@ class NotificationConfig(AppConfig):
     name = 'notification'
 
     def ready(self):
+        print("signal carregado")
         import notification.signals

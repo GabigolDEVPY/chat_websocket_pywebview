@@ -3,6 +3,7 @@ from django.dispatch import receiver
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from friend.models import RequestFriend
+print("signals importado")
 
 @receiver(post_save, sender=RequestFriend)
 def friend_request_created(sender, instance, created, **kwargs):

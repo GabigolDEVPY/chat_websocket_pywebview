@@ -17,10 +17,11 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         )
         
     async def friend_request_notification(self, event):
+        payload = event["payload"]
         await self.send(text_data=json.dumps({
                 "type": "friend_request_notification", 
-                "id": event["id"], 
-                "user_id": event["user_id"], 
-                "username": event["username"]
+                "id": payload["id"], 
+                "user_id": payload["user_id"], 
+                "username": payload["username"]
             }))
     
