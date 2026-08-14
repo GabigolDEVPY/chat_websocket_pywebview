@@ -13,7 +13,7 @@ class StatusConsumer(AsyncWebsocketConsumer):
             await self.close()
             return
         
-        self.group_name = f"user_{self.user.id}"
+        self.group_name = f"status_{self.user.id}"
         
         
         await self.channel_layer.group_add(
