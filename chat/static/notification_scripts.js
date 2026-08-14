@@ -12,7 +12,7 @@ function NotificationSocket () {
     ws_notification.onmessage = function(e) {
         const data = JSON.parse(e.data);
         if (data.type === "friend_request.notification") {
-            console.log("criando a conexão com notification")
+            console.log("solicitação de amizade recebida")
         }
     }
 }

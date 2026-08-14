@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'channels',
     'chat',
     'friend',
-    'notification'
+    'notification.apps.NotificationConfig'
 ]
 
 MIDDLEWARE = [
