@@ -10,7 +10,7 @@ class Room(models.Model):
     
     
 class Friend(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="friends")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="friends") # quem ta recebendo a solicitação
     friend = models.ForeignKey(User, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     

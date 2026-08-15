@@ -12,8 +12,9 @@ def friend_request_created(sender, instance, created, **kwargs):
     
     channel_layer = get_channel_layer()
     print("chamdno create friend")
+    print(f"chamdno {instance.user.username}")
     async_to_sync(channel_layer.group_send)(
-        f"notification_{instance.friend.id}",
+        f"notification_{instance.user.id}",
         {
             "type": "friend_request.notification",
             "payload": {

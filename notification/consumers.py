@@ -4,6 +4,7 @@ import json
 class NotificationConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.room_name = f"notification_{self.scope['user'].id}"
+        print(self.scope['user'], "sala", self.room_name)
         
         await self.channel_layer.group_add(self.room_name, self.channel_name)
         
@@ -17,6 +18,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         )
         
     async def friend_request_notification(self, event):
+        print("cheguei no friend request consumer")
         payload = event["payload"]
         await self.send(text_data=json.dumps({
                 "type": "friend_request_notification", 

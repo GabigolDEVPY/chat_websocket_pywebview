@@ -8,12 +8,11 @@ function NotificationSocket () {
     const protocol = window.location.protocol === "https:" ? "wss" : "ws";
 
     ws_notification = new WebSocket(`${protocol}://${window.location.host}/ws/notification/`)
-    console.log("criando a conexão com notification")
     ws_notification.onmessage = function(e) {
-        print("notificação chegou")
         const data = JSON.parse(e.data);
-        if (data.type === "friend_request.notification") {
-            console.log("solicitação de amizade recebida")
+        if (data.type === "friend_request_notification") {
+            console.log("solicitação recebida")
+            window.pywebview.api.ShowNotification("Solicitação de Amizade", `O usuário ${data.username} lhe enviou solicitação de amizade`);
         }
     }
 }
